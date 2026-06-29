@@ -1,0 +1,32 @@
+# Secrets
+.env
+
+# Runtime data (gitignored; only .gitkeep placeholders are tracked)
+data/inputs/*
+data/market/*
+data/comps/*
+outputs/**/*
+logs/**/*
+!**/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.mypy_cache/
+.ruff_cache/
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# macOS
+.DS_Store

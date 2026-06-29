@@ -1,0 +1,102 @@
+# AUCTUS Capital Partners AG — Sector Valuation Benchmarks
+# Source: FactSet, Refinitiv, AUCTUS deal experience
+# Version: 1.0 | Updated: 2026-06-29
+# Update quarterly. Values represent DACH mid-market (€10m–€150m EV) transactions.
+# This file is READ-ONLY to the agent. Use for sanity checks only, not computation.
+
+by_sector:
+  industrial_services:
+    ev_ebitda_median: 7.5
+    ev_ebitda_mean: 7.8
+    ev_ebitda_p25: 6.0
+    ev_ebitda_p75: 9.0
+    ev_revenue_median: 0.75
+    ev_revenue_p25: 0.55
+    ev_revenue_p75: 1.00
+    typical_deal_size_eur: "€20m–€80m"
+    data_points: 34
+    vintage_range: "2018–2025"
+
+  hvac_services:
+    ev_ebitda_median: 8.0
+    ev_ebitda_mean: 8.3
+    ev_ebitda_p25: 6.5
+    ev_ebitda_p75: 10.0
+    ev_revenue_median: 0.85
+    ev_revenue_p25: 0.65
+    ev_revenue_p75: 1.10
+    typical_deal_size_eur: "€15m–€60m"
+    data_points: 22
+    vintage_range: "2019–2025"
+
+  facility_management:
+    ev_ebitda_median: 7.0
+    ev_ebitda_mean: 7.2
+    ev_ebitda_p25: 5.5
+    ev_ebitda_p75: 8.5
+    ev_revenue_median: 0.60
+    ev_revenue_p25: 0.45
+    ev_revenue_p75: 0.80
+    typical_deal_size_eur: "€20m–€100m"
+    data_points: 28
+    vintage_range: "2018–2025"
+
+  healthcare_services:
+    ev_ebitda_median: 10.0
+    ev_ebitda_mean: 10.8
+    ev_ebitda_p25: 8.0
+    ev_ebitda_p75: 13.0
+    ev_revenue_median: 1.20
+    ev_revenue_p25: 0.90
+    ev_revenue_p75: 1.60
+    typical_deal_size_eur: "€20m–€150m"
+    data_points: 41
+    vintage_range: "2018–2025"
+
+  it_services_smb:
+    ev_ebitda_median: 9.0
+    ev_ebitda_mean: 9.5
+    ev_ebitda_p25: 7.0
+    ev_ebitda_p75: 12.0
+    ev_revenue_median: 1.10
+    ev_revenue_p25: 0.80
+    ev_revenue_p75: 1.50
+    typical_deal_size_eur: "€10m–€80m"
+    data_points: 37
+    vintage_range: "2019–2025"
+
+  testing_inspection_certification:
+    ev_ebitda_median: 9.5
+    ev_ebitda_mean: 10.0
+    ev_ebitda_p25: 8.0
+    ev_ebitda_p75: 12.0
+    ev_revenue_median: 1.30
+    ev_revenue_p25: 1.00
+    ev_revenue_p75: 1.70
+    typical_deal_size_eur: "€25m–€120m"
+    data_points: 19
+    vintage_range: "2019–2025"
+
+  veterinary_services:
+    ev_ebitda_median: 11.0
+    ev_ebitda_mean: 11.5
+    ev_ebitda_p25: 9.0
+    ev_ebitda_p75: 14.0
+    ev_revenue_median: 1.50
+    ev_revenue_p25: 1.10
+    ev_revenue_p75: 2.00
+    typical_deal_size_eur: "€10m–€60m"
+    data_points: 26
+    vintage_range: "2020–2025"
+
+  environmental_services:
+    ev_ebitda_median: 8.5
+    ev_ebitda_mean: 8.8
+    ev_ebitda_p25: 7.0
+    ev_ebitda_p75: 10.5
+    ev_revenue_median: 0.90
+    ev_revenue_p25: 0.70
+    ev_revenue_p75: 1.20
+    typical_deal_size_eur: "€20m–€100m"
+    data_points: 15
+    vintage_range: "2020–2025"

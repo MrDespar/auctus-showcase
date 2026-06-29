@@ -1,0 +1,34 @@
+# DCF Sensitivity Grid Configuration
+# Referenced by: skills/dcf-valuation/SKILL.md Step 5
+# Governs the dimensions, step sizes, and formatting of the sensitivity output.
+
+grid:
+  # WACC axis: base ± wacc_bps_range, at wacc_steps evenly spaced points
+  wacc_bps_range: 200     # ±200 bps (e.g. base 10% → range 8%–12%)
+  wacc_steps: 5           # 5 points: base-200, base-100, base, base+100, base+200
+
+  # Terminal Growth Rate axis: base ± tgr_bps_range, at tgr_steps evenly spaced points
+  tgr_bps_range: 100      # ±100 bps (e.g. base 2.5% → range 1.5%–3.5%)
+  tgr_steps: 5            # 5 points: base-100, base-50, base, base+50, base+100
+
+  # Output metric in cells
+  output_metric: enterprise_value_eur_m   # Options: enterprise_value_eur_m | equity_value_eur_m | ev_ebitda_implied
+
+# Formatting rules for the markdown sensitivity table
+formatting:
+  cell_precision: 1            # 1 decimal place for EV values (e.g. 42.3)
+  base_case_marker: "**{v}**"  # Bold the base case cell
+  highlight_above_threshold: null  # Optional: mark cells above an EV threshold
+  currency_unit: "€m"
+
+# Sanity checks — script must verify these before writing output
+validation:
+  max_allowed_nan_cells: 0         # Zero NaN cells permitted
+  min_ev_eur_m: 0.0               # EV must be positive in all cells
+  max_tv_pct_of_ev: 0.85          # Warn if any cell has TV >85% of EV
+
+# CSV output schema
+csv_schema:
+  index: "wacc"           # Row index is WACC value (as decimal, e.g. 0.10)
+  columns: "tgr"          # Column headers are TGR values (as decimal, e.g. 0.025)
+  values: "enterprise_value_eur_m"

@@ -1,0 +1,109 @@
+# AUCTUS Sector Taxonomy — Target Market Definitions
+# Referenced by: skills/competitor-analysis/SKILL.md Step 1
+# Maps user-provided sector descriptions to canonical sector slugs + NACE codes.
+
+sectors:
+  industrial_services:
+    slug: industrial_services
+    display_name: "Industrial & Technical Services"
+    nace_codes: ["N81", "N82", "M74", "C33"]
+    description: >
+      Technical maintenance, repair, and installation services for industrial
+      equipment and facilities. Includes mechanical, electrical, and instrumentation
+      services. Highly fragmented regionally, strong DACH presence.
+    fragmentation_level: very_high
+    key_buy_and_build_rationale: >
+      Highly localized market with many owner-managed specialists. Consolidation
+      creates geographic coverage, cross-selling, and procurement synergies.
+    typical_revenue_model: project_and_service_contract
+
+  hvac_services:
+    slug: hvac_services
+    display_name: "HVAC, Heating & Climate Services"
+    nace_codes: ["F4322", "N8110"]
+    description: >
+      Installation, maintenance, and servicing of heating, ventilation, air
+      conditioning, and refrigeration systems. Both residential and commercial segments.
+    fragmentation_level: very_high
+    key_buy_and_build_rationale: >
+      Extremely fragmented — thousands of SME operators in DACH alone. Energy
+      transition tailwind (heat pumps, building retrofits) driving secular growth.
+    typical_revenue_model: service_contract_and_project
+
+  facility_management:
+    slug: facility_management
+    display_name: "Facility Management & Building Services"
+    nace_codes: ["N81", "N80"]
+    description: >
+      Integrated facility management, cleaning, security, catering, and technical
+      building services for commercial and public sector clients.
+    fragmentation_level: high
+    key_buy_and_build_rationale: >
+      Customers increasingly prefer integrated multi-service providers. Add-ons
+      bring service line breadth and customer base cross-sell.
+    typical_revenue_model: long_term_service_contract
+
+  healthcare_services:
+    slug: healthcare_services
+    display_name: "Healthcare & Social Services"
+    nace_codes: ["Q86", "Q87", "Q88"]
+    description: >
+      Outpatient care, specialist medical practices, physiotherapy, dental chains,
+      and social care services. Regulated but highly fragmented at provider level.
+    fragmentation_level: high
+    key_buy_and_build_rationale: >
+      Aging demographics, regulatory push toward consolidated operators, and
+      strong cash flow visibility from statutory payer contracts.
+    typical_revenue_model: fee_for_service_and_contract
+
+  it_services_smb:
+    slug: it_services_smb
+    display_name: "IT Services for SMB (MSP / IT Support)"
+    nace_codes: ["J62", "J63"]
+    description: >
+      Managed service providers, IT support, cloud migration, and cybersecurity
+      services targeting the German/Austrian/Swiss SMB market.
+    fragmentation_level: very_high
+    key_buy_and_build_rationale: >
+      Customers demand local relationships; scale benefits from shared NOC/SOC,
+      licensing negotiation power, and cross-selling cybersecurity and cloud.
+    typical_revenue_model: recurring_msp_contract
+
+  testing_inspection_certification:
+    slug: testing_inspection_certification
+    display_name: "Testing, Inspection & Certification (TIC)"
+    nace_codes: ["M71", "M74"]
+    description: >
+      Independent testing, technical inspections, and certification services
+      for industrial, food, pharma, and construction sectors.
+    fragmentation_level: medium
+    key_buy_and_build_rationale: >
+      Accreditation is defensible; niche specialists complement platform with
+      new sector certifications. Recurring revenue from re-certification cycles.
+    typical_revenue_model: project_and_recurring_audit
+
+  veterinary_services:
+    slug: veterinary_services
+    display_name: "Veterinary Services & Animal Health"
+    nace_codes: ["M7500"]
+    description: >
+      Small animal (companion pet) veterinary practices, specialist referral
+      clinics, and emergency veterinary hospitals in DACH.
+    fragmentation_level: high
+    key_buy_and_build_rationale: >
+      Highly fragmented (mostly single-vet practices). Consolidators benefit from
+      group procurement, shared pathology, and brand premium. Strong PE tailwind.
+    typical_revenue_model: fee_for_service
+
+  environmental_services:
+    slug: environmental_services
+    display_name: "Environmental & Waste Management Services"
+    nace_codes: ["E38", "E39", "M74"]
+    description: >
+      Hazardous waste disposal, soil remediation, environmental consulting,
+      and industrial wastewater treatment services in DACH.
+    fragmentation_level: high
+    key_buy_and_build_rationale: >
+      Regulatory tightening and industrial decarbonization mandate create demand.
+      Regional specialists can be rolled into comprehensive service platforms.
+    typical_revenue_model: project_and_service_contract

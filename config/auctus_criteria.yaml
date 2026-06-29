@@ -1,0 +1,60 @@
+# AUCTUS Capital Partners AG — Investment Criteria
+# Authority: AUCTUS Investment Committee
+# Version: 1.0 | Updated: 2026-06-29
+# This file is READ-ONLY to the agent. Changes require IC approval.
+
+hard_filters:
+  revenue_min_eur: 10_000_000       # €10m floor
+  revenue_max_eur: 150_000_000      # €150m ceiling
+  ebitda_margin_min: 0.08           # 8% absolute floor
+  ebitda_margin_preferred: 0.15     # 15% preferred threshold
+  customer_concentration_max_single: 0.30  # No single customer >30%
+  geographies_preferred:
+    - DE   # Germany
+    - AT   # Austria
+    - CH   # Switzerland
+  geographies_allowed:
+    - DE
+    - AT
+    - CH
+    - NL   # Netherlands
+    - BE   # Belgium
+    - FR   # France
+    - IT   # Italy
+    - SE   # Sweden
+    - DK   # Denmark
+    - NO   # Norway
+  ownership_preferred:
+    - founder
+    - family
+    - management_buyout
+  excluded_sectors:
+    - financial_services
+    - real_estate
+    - oil_gas
+    - pharma_rnd
+    - public_listed
+
+# Scoring model weights (must sum to 1.0)
+scoring_weights:
+  revenue_in_sweet_spot: 0.15       # €20m–€80m = maximum score
+  founder_owned: 0.20               # Founder/family ownership premium
+  fragmented_market: 0.20           # Market has ≥20 players of similar size
+  recurring_revenue_pct: 0.15       # % of revenue that is recurring/contracted
+  ebitda_margin: 0.15               # Normalized EBITDA margin quality
+  geographic_concentration_dach: 0.10  # DACH revenue concentration
+  low_customer_concentration: 0.05  # No customer >20% = full score
+
+# Buy-and-build specific thresholds
+buy_and_build:
+  platform_min_revenue_eur: 20_000_000   # €20m minimum for platform
+  addon_max_revenue_eur: 40_000_000      # €40m ceiling for add-ons
+  min_addons_available_in_market: 5      # Market must have ≥5 potential add-ons
+  target_combined_ebitda_margin: 0.12    # 12% post-synergy combined margin
+
+# Output recommendation thresholds
+recommendation_bands:
+  strong_buy:   { min_score: 80, label: "Priority Target" }
+  buy:          { min_score: 60, label: "Active Coverage" }
+  watch:        { min_score: 40, label: "Monitor" }
+  pass:         { min_score: 0,  label: "Pass" }

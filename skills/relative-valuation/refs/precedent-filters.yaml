@@ -1,0 +1,71 @@
+# Precedent Transaction Filter Parameters
+# Referenced by: skills/relative-valuation/SKILL.md Step 4
+# Governs the search parameters passed to precedent_engine.py
+
+filters:
+  # Date range — default to last 10 years; override with explicit user instruction
+  vintage_years_back: 10
+  vintage_start_year: 2015   # Hard floor; deals older than this excluded by default
+
+  # Geography — search priority
+  geography_primary:
+    - DE
+    - AT
+    - CH
+  geography_secondary:
+    - NL
+    - BE
+    - FR
+    - IT
+    - SE
+    - DK
+    - NO
+    - UK   # Include UK for data density; note post-Brexit premium
+
+  # Deal size range (EV in EUR millions)
+  ev_min_eur_m: 5.0      # Floor: smaller deals rarely have disclosed EV
+  ev_max_eur_m: 500.0    # Ceiling: avoids large-cap distortion
+
+  # Buyer type — include both; separate in output tables
+  buyer_types:
+    - pe_sponsored
+    - strategic_acquirer
+    - management_buyout
+
+  # Minimum data requirements per deal
+  required_fields:
+    - target_name
+    - close_date
+    - sector
+    - ev_eur_m
+    - ev_ebitda_multiple
+
+  # Deals to exclude
+  exclusions:
+    - "Distressed/restructuring transactions (buyer paid below book value)"
+    - "Transactions with deferred consideration >40% of total EV"
+    - "Joint venture formations (not outright acquisitions)"
+    - "Minority stake transactions (<50% acquired)"
+
+# Cycle-weighting rules for multi-decade datasets
+cycle_weighting:
+  full_weight_years: 5        # Last 5 years: weight 1.0x
+  half_weight_years: 10       # Years 5–10: weight 0.5x
+  exclude_beyond_years: 10    # >10 years: excluded by default
+
+# Output format for precedent_engine.py
+output_columns:
+  - deal_name
+  - target_company
+  - sector
+  - close_date
+  - buyer_name
+  - buyer_type
+  - ev_eur_m
+  - revenue_eur_m
+  - ebitda_eur_m
+  - ev_ebitda_multiple
+  - ev_revenue_multiple
+  - geography
+  - data_source
+  - confidence_level    # HIGH / MED / LOW based on public disclosure quality

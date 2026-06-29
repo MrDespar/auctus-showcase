@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python scripts/*.py*)",
+      "Bash(pytest tests/*)",
+      "Bash(python -m pytest*)",
+      "Read(*)",
+      "Write(data/*)",
+      "Write(outputs/*)",
+      "Write(logs/*)"
+    ],
+    "deny": [
+      "Write(skills/*)",
+      "Write(scripts/*)",
+      "Write(config/*)",
+      "Write(CLAUDE.md)",
+      "Write(mcp_config.json)",
+      "Write(tests/*)"
+    ]
+  }
+}

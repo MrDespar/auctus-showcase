@@ -1,0 +1,101 @@
+# AUCTUS Capital Partners AG — Financial Constants & WACC Parameters
+# Source: Damodaran Europe data + AUCTUS internal adjustments
+# Version: 1.0 | Updated: 2026-06-29
+# Update quarterly: risk-free rate, ERP, sector betas
+# This file is READ-ONLY to the agent.
+
+# ── Macro Parameters ────────────────────────────────────────────────────────
+risk_free_rate_default: 0.0250      # German 10Y Bund yield (approximate)
+equity_risk_premium_default: 0.0550 # Damodaran Europe ERP
+size_premium_bps: 150               # Mid-market illiquidity + small-cap premium
+
+# ── DACH Corporate Tax Rates ────────────────────────────────────────────────
+tax_rates:
+  DE: 0.299    # ~30% (15% corporate + 5.5% solidarity + ~15% trade tax)
+  AT: 0.250    # 25% flat corporate rate
+  CH: 0.195    # ~19.5% average (varies by canton; Zurich ~21%, Zug ~12%)
+  default: 0.290
+
+# ── Terminal Growth Rate Constraints ────────────────────────────────────────
+terminal_growth:
+  ceiling: 0.040    # Hard cap — never exceed DACH long-run nominal GDP growth
+  floor: 0.010      # Floor — real GDP minimum assumption
+  default: 0.025
+
+# ── Sector-Specific WACC Parameters ────────────────────────────────────────
+# Format: beta_unlevered, debt_spread_bps, terminal_growth_rate override
+by_sector:
+  industrial_services:
+    beta_unlevered: 0.85
+    debt_spread_bps: 230
+    terminal_growth_rate: 0.020
+    target_debt_to_equity: 0.60
+
+  hvac_services:
+    beta_unlevered: 0.80
+    debt_spread_bps: 220
+    terminal_growth_rate: 0.022
+    target_debt_to_equity: 0.55
+
+  facility_management:
+    beta_unlevered: 0.75
+    debt_spread_bps: 200
+    terminal_growth_rate: 0.020
+    target_debt_to_equity: 0.50
+
+  healthcare_services:
+    beta_unlevered: 0.70
+    debt_spread_bps: 180
+    terminal_growth_rate: 0.030
+    target_debt_to_equity: 0.45
+
+  it_services_smb:
+    beta_unlevered: 1.05
+    debt_spread_bps: 270
+    terminal_growth_rate: 0.030
+    target_debt_to_equity: 0.40
+
+  testing_inspection_certification:
+    beta_unlevered: 0.85
+    debt_spread_bps: 210
+    terminal_growth_rate: 0.025
+    target_debt_to_equity: 0.55
+
+  veterinary_services:
+    beta_unlevered: 0.65
+    debt_spread_bps: 170
+    terminal_growth_rate: 0.035
+    target_debt_to_equity: 0.45
+
+  environmental_services:
+    beta_unlevered: 0.80
+    debt_spread_bps: 215
+    terminal_growth_rate: 0.025
+    target_debt_to_equity: 0.55
+
+  business_services:
+    beta_unlevered: 0.90
+    debt_spread_bps: 240
+    terminal_growth_rate: 0.022
+    target_debt_to_equity: 0.50
+
+  # Fallback for unlisted sectors
+  default:
+    beta_unlevered: 0.90
+    debt_spread_bps: 250
+    terminal_growth_rate: 0.025
+    target_debt_to_equity: 0.60
+
+# ── DCF Projection Defaults ─────────────────────────────────────────────────
+projection_defaults:
+  forecast_years: 5
+  capex_pct_revenue_default: 0.040   # 4% of revenue
+  nwc_pct_revenue_default: 0.080     # 8% of revenue
+  da_pct_revenue_default: 0.025      # 2.5% of revenue
+
+# ── Sensitivity Grid Configuration ─────────────────────────────────────────
+sensitivity_grid:
+  wacc_bps_range: 200      # ±200 bps around base WACC
+  tgr_bps_range: 100       # ±100 bps around base terminal growth rate
+  wacc_steps: 5            # Number of WACC data points (including base)
+  tgr_steps: 5             # Number of TGR data points (including base)

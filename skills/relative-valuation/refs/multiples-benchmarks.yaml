@@ -1,0 +1,115 @@
+# Valuation Multiples Benchmarks — Sector Reference
+# Referenced by: skills/relative-valuation/SKILL.md Step 2
+# FOR SANITY CHECKING ONLY. Not used in script computation.
+# Source: FactSet/Refinitiv public comps + AUCTUS deal experience
+# Updated: 2026-Q1 | Update quarterly
+
+# ── How to Use ───────────────────────────────────────────────────────────────
+# 1. After the comps script runs, compare script-output multiples to these benchmarks.
+# 2. If script output deviates >2x from benchmark median, flag for review.
+# 3. Never replace script output with benchmark values.
+
+by_sector:
+  industrial_services:
+    ev_ebitda:
+      p25: 6.0
+      median: 7.5
+      mean: 7.8
+      p75: 9.0
+      note: "Capital-light models (asset-light maintenance) trade at upper end"
+    ev_revenue:
+      p25: 0.55
+      median: 0.75
+      p75: 1.00
+
+  hvac_services:
+    ev_ebitda:
+      p25: 6.5
+      median: 8.0
+      mean: 8.3
+      p75: 10.0
+      note: "Heat pump / energy transition exposure commands premium"
+    ev_revenue:
+      p25: 0.65
+      median: 0.85
+      p75: 1.10
+
+  facility_management:
+    ev_ebitda:
+      p25: 5.5
+      median: 7.0
+      mean: 7.2
+      p75: 8.5
+      note: "Lower multiple reflects thin margins and low switching costs"
+    ev_revenue:
+      p25: 0.45
+      median: 0.60
+      p75: 0.80
+
+  healthcare_services:
+    ev_ebitda:
+      p25: 8.0
+      median: 10.0
+      mean: 10.8
+      p75: 13.0
+      note: "Premium for regulatory barriers and demographic tailwinds"
+    ev_revenue:
+      p25: 0.90
+      median: 1.20
+      p75: 1.60
+
+  it_services_smb:
+    ev_ebitda:
+      p25: 7.0
+      median: 9.0
+      mean: 9.5
+      p75: 12.0
+      note: "Recurring MRR/ARR streams command upper-end multiples"
+    ev_revenue:
+      p25: 0.80
+      median: 1.10
+      p75: 1.50
+
+  testing_inspection_certification:
+    ev_ebitda:
+      p25: 8.0
+      median: 9.5
+      mean: 10.0
+      p75: 12.0
+      note: "Accreditation moat and recurring re-certification revenue premium"
+    ev_revenue:
+      p25: 1.00
+      median: 1.30
+      p75: 1.70
+
+  veterinary_services:
+    ev_ebitda:
+      p25: 9.0
+      median: 11.0
+      mean: 11.5
+      p75: 14.0
+      note: "High PE activity has compressed cap rates; premium for specialty clinics"
+    ev_revenue:
+      p25: 1.10
+      median: 1.50
+      p75: 2.00
+
+  environmental_services:
+    ev_ebitda:
+      p25: 7.0
+      median: 8.5
+      mean: 8.8
+      p75: 10.5
+      note: "ESG mandate tailwind; hazmat specialists at premium"
+    ev_revenue:
+      p25: 0.70
+      median: 0.90
+      p75: 1.20
+
+# ── Cycle Adjustment Notes ───────────────────────────────────────────────────
+cycle_notes:
+  reference_year: 2025
+  rate_environment: "Rates elevated vs. 2021 peak; multiples compressed ~1.5x turns vs. 2021 peaks"
+  adjustment_guidance: >
+    For transactions completed 2020–2021, apply a downward adjustment of 1.0–1.5x
+    EV/EBITDA when comparing to current deals, reflecting rate normalization impact.

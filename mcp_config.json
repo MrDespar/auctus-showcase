@@ -1,0 +1,54 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/maxpescosta/Desktop/LLM Projects/auctus_showcase"
+      ],
+      "description": "Scoped read/write access to the AUCTUS project directory only. Never grants access above the project root."
+    },
+    "fetch": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"],
+      "description": "HTTP fetch for public market data, company profiles, and financial news. Public data only — never transmit client deal data.",
+      "env": {
+        "FETCH_TIMEOUT_MS": "10000",
+        "FETCH_MAX_REDIRECTS": "3"
+      }
+    },
+    "sqlite": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-server-sqlite",
+        "--db-path",
+        "data/comps/auctus_comps.db"
+      ],
+      "description": "Local SQLite database for trading comps and precedent transaction data. Stored entirely on-premises."
+    },
+    "brave-search": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+      "description": "Web search for market research, competitor discovery, and sector news during Competitor Analysis workflow.",
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+      }
+    }
+  },
+  "_metadata": {
+    "version": "1.0.0",
+    "project": "AUCTUS Capital Partners AG — Agentic PE Platform",
+    "environment_variables_required": [
+      "BRAVE_API_KEY",
+      "ANTHROPIC_API_KEY"
+    ],
+    "optional_environment_variables": [
+      "FACTSET_API_KEY",
+      "FACTSET_USERNAME",
+      "FACTSET_MCP_ENDPOINT"
+    ],
+    "security_note": "All credentials injected via environment variables. See .env.example. Never hardcode secrets."
+  }
+}

@@ -1,0 +1,105 @@
+# WACC Assumptions Reference
+# Referenced by: skills/dcf-valuation/SKILL.md Step 2
+# Source: Damodaran Europe (Jan 2026) + AUCTUS internal adjustments
+# Update: quarterly (align with latest Damodaran release and Bund yield)
+
+# ── Macro Inputs (update quarterly) ────────────────────────────────────────
+macro:
+  risk_free_rate: 0.0250          # German 10Y Bund yield
+  equity_risk_premium: 0.0550     # Damodaran Europe ERP (Western Europe)
+  size_premium_bps: 150           # Mid-market illiquidity premium
+  update_date: "2026-Q1"
+
+# ── WACC Ranges by Sector (midpoint = recommended base case) ────────────────
+# Format: low / midpoint / high represent ±1 standard deviation range
+by_sector:
+  industrial_services:
+    beta_unlevered: 0.85
+    target_debt_to_equity: 0.60
+    debt_spread_bps: 230
+    terminal_growth_rate: 0.020
+    wacc_low: 0.090
+    wacc_midpoint: 0.105
+    wacc_high: 0.120
+
+  hvac_services:
+    beta_unlevered: 0.80
+    target_debt_to_equity: 0.55
+    debt_spread_bps: 220
+    terminal_growth_rate: 0.022
+    wacc_low: 0.085
+    wacc_midpoint: 0.100
+    wacc_high: 0.115
+
+  facility_management:
+    beta_unlevered: 0.75
+    target_debt_to_equity: 0.50
+    debt_spread_bps: 200
+    terminal_growth_rate: 0.020
+    wacc_low: 0.080
+    wacc_midpoint: 0.095
+    wacc_high: 0.110
+
+  healthcare_services:
+    beta_unlevered: 0.70
+    target_debt_to_equity: 0.45
+    debt_spread_bps: 180
+    terminal_growth_rate: 0.030
+    wacc_low: 0.075
+    wacc_midpoint: 0.090
+    wacc_high: 0.105
+
+  it_services_smb:
+    beta_unlevered: 1.05
+    target_debt_to_equity: 0.40
+    debt_spread_bps: 270
+    terminal_growth_rate: 0.030
+    wacc_low: 0.105
+    wacc_midpoint: 0.125
+    wacc_high: 0.145
+
+  testing_inspection_certification:
+    beta_unlevered: 0.85
+    target_debt_to_equity: 0.55
+    debt_spread_bps: 210
+    terminal_growth_rate: 0.025
+    wacc_low: 0.090
+    wacc_midpoint: 0.108
+    wacc_high: 0.126
+
+  veterinary_services:
+    beta_unlevered: 0.65
+    target_debt_to_equity: 0.45
+    debt_spread_bps: 170
+    terminal_growth_rate: 0.035
+    wacc_low: 0.070
+    wacc_midpoint: 0.085
+    wacc_high: 0.100
+
+  environmental_services:
+    beta_unlevered: 0.80
+    target_debt_to_equity: 0.55
+    debt_spread_bps: 215
+    terminal_growth_rate: 0.025
+    wacc_low: 0.085
+    wacc_midpoint: 0.102
+    wacc_high: 0.119
+
+  default:
+    beta_unlevered: 0.90
+    target_debt_to_equity: 0.60
+    debt_spread_bps: 250
+    terminal_growth_rate: 0.025
+    wacc_low: 0.095
+    wacc_midpoint: 0.115
+    wacc_high: 0.135
+
+# ── WACC Escalation Triggers ────────────────────────────────────────────────
+# Use WACC_HIGH if any of these risk factors present:
+escalation_triggers:
+  - "Single customer >25% of revenue"
+  - "Revenue CAGR <2% over last 3 years (declining business)"
+  - "No audited financial statements available"
+  - "Key-person dependency: founder is sole technical expert"
+  - "Operating in single geography with >80% revenue concentration"
+  - "Pending material litigation or regulatory investigation"
