@@ -1,0 +1,28 @@
+# AUCTUS Capital Partners AG — LBO Sensitivity Grid Configuration
+# Version: 1.0 | Updated: 2026-06-29
+# READ-ONLY to the agent.
+
+# ── Primary Sensitivity: Entry Multiple × Exit Multiple ───────────────────────
+entry_exit_grid:
+  entry_steps: 5                      # Number of entry-multiple data points
+  exit_steps: 5                       # Number of exit-multiple data points
+  entry_delta: 1.0                    # Step size in EV/EBITDA turns
+  exit_delta: 1.0                     # Step size in EV/EBITDA turns
+  # Result: 5 entry × 5 exit = 25 cells for both IRR% and MOIC grids
+
+# ── AUCTUS IC Hurdle Rates ────────────────────────────────────────────────────
+ic_hurdle_rates:
+  min_moic: 2.0                       # Minimum 2.0× gross MOIC
+  min_irr_pct: 20.0                   # Minimum 20% gross IRR
+  preferred_moic: 2.5                 # Preferred case target
+  preferred_irr_pct: 25.0             # Preferred case target
+
+# ── Secondary Sensitivity (qualitative — not computed by engine) ──────────────
+secondary_sensitivities:
+  - name: euribor_shock
+    description: "Euribor +100bps — qualitative interest coverage impact"
+    note: "Compute manually: senior_interest * (1 + 0.01 / base_euribor_rate)"
+  - name: revenue_growth_miss
+    description: "Revenue growth 200bps below base — re-run engine with adjusted rates"
+  - name: margin_compression
+    description: "EBITDA margin 100bps below base each year — re-run engine"

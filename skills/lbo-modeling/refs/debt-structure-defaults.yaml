@@ -1,0 +1,49 @@
+# AUCTUS Capital Partners AG — LBO Debt Structure Defaults
+# DACH mid-market (€10m–€150m EV) leveraged transactions
+# Source: AUCTUS deal experience + DACH direct lending market intelligence
+# Version: 1.0 | Updated: 2026-06-29
+# READ-ONLY to the agent.
+
+# ── Total Leverage Guidance (Debt / EBITDA) ──────────────────────────────────
+leverage_guidance:
+  max_total_leverage_x: 5.5           # Hard ceiling for DACH mid-market
+  preferred_total_leverage_x: 4.5     # IC preferred range top
+  min_total_leverage_x: 3.0           # Below this = conservative / equity-heavy
+  senior_max_x: 4.0                   # Senior-only deals ceiling
+  notes_typical_x: 1.0                # Typical second-lien / PIK tranche size
+
+# ── Senior Term Loan (TLA / TLB) ─────────────────────────────────────────────
+senior_term_loan:
+  typical_spread_bps:
+    investment_grade_adjacent: 300
+    typical_midmarket: 375
+    leveraged: 450
+  euribor_floor_default: 0.00         # Most DACH lenders no longer apply a floor
+  amortisation_pct_annual:
+    conservative: 0.10                # 10% per year (fully amortising in 10yr)
+    typical: 0.05                     # 5% per year (bullet in year 7 for remainder)
+    bullet: 0.00                      # Zero amort (institutional TLB)
+  cash_sweep_pct_typical: 0.50        # 50% of excess LFCF swept to prepayment
+  arrangement_fee_pct: 0.020          # 2.0% of committed amount
+
+# ── Notes / Second Lien / Mezzanine ──────────────────────────────────────────
+notes:
+  typical_fixed_rate_range: [0.085, 0.110]  # 8.5% – 11.0%
+  typical_floating_spread_bps_range: [550, 700]
+  pik_toggle_available: true          # PIK option commonly negotiated
+  typical_tenor_years: 7              # Bullet; 1 year longer than senior
+  arrangement_fee_pct: 0.025          # 2.5% of notes principal
+
+# ── Transaction Fee Ranges ────────────────────────────────────────────────────
+transaction_fees:
+  ma_advisor_success_fee_pct_ev:
+    small_deals_under_50m: 0.020      # 2.0% for EV < €50m
+    mid_market: 0.015                 # 1.5% for EV €50m–€150m
+  legal_due_diligence_eur_m: 0.5     # Approximate all-in D&D cost
+  management_incentive_plan_pct: 0.10 # MIP pool as % of equity (typical)
+
+# ── Interest Coverage & Covenant Benchmarks ───────────────────────────────────
+covenants:
+  min_interest_coverage_x: 2.0        # Typical lender covenant floor
+  max_leverage_covenant_x: 5.0        # Springing leverage covenant
+  equity_cure_allowed: true           # Standard in DACH direct lending

@@ -3,10 +3,14 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pandas as pd
 import pytest
 import yaml
+
+if TYPE_CHECKING:
+    from scripts.lbo_engine import EntryAssumptions, SourcesUses, YearProjection
 
 
 @pytest.fixture
@@ -114,3 +118,58 @@ def tmp_output_dir(tmp_path: Path) -> Path:
     (tmp_path / "target_matrices").mkdir()
     (tmp_path / "valuation_reports").mkdir()
     return tmp_path
+
+
+# ── LBO Fixtures ──────────────────────────────────────────────────────────────
+
+@pytest.fixture
+def lbo_assumptions() -> "EntryAssumptions":
+    """Canonical AUCTUS test case: Muster GmbH HVAC platform, 8.0× entry, 45% equity."""
+    from scripts.lbo_engine import EntryAssumptions
+    return EntryAssumptions(
+        company_name="Muster GmbH",
+        geography="DE",
+        entry_ebitda_eur_m=8.5,
+        entry_multiple=8.0,
+        equity_pct=0.45,
+        senior_debt_pct=0.40,
+        notes_pct=0.15,
+        euribor_rate=0.039,
+        euribor_floor=0.00,
+        senior_spread_bps=375,
+        notes_is_fixed=True,
+        notes_fixed_rate=0.095,
+        notes_euribor_spread_bps=550,
+        senior_amort_pct_annual=0.05,
+        senior_cash_sweep_pct=0.50,
+        advisor_fee_pct_ev=0.015,
+        financing_fee_pct_debt=0.020,
+        fees_capitalized=True,
+        tax_rate=0.299,
+        projection_years=5,
+        revenue_base_eur_m=50.0,
+        revenue_growth_rates=[0.07, 0.07, 0.06, 0.06, 0.05],
+        ebitda_margins=[0.175, 0.180, 0.185, 0.190, 0.195],
+        da_pct_revenue=0.025,
+        capex_pct_revenue=0.035,
+        nwc_pct_revenue_change=0.08,
+        exit_year=5,
+        exit_multiple=9.0,
+    )
+
+
+@pytest.fixture
+def lbo_sources_uses(lbo_assumptions: "EntryAssumptions") -> "SourcesUses":
+    from scripts.lbo_engine import build_sources_uses
+    return build_sources_uses(lbo_assumptions)
+
+
+@pytest.fixture
+def lbo_projections(
+    lbo_assumptions: "EntryAssumptions",
+    lbo_sources_uses: "SourcesUses",
+) -> "list[YearProjection]":
+    from scripts.lbo_engine import compute_projections
+    return compute_projections(lbo_assumptions, lbo_sources_uses)
+
+
