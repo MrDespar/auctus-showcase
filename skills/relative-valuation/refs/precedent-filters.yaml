@@ -66,6 +66,8 @@ output_columns:
   - ebitda_eur_m
   - ev_ebitda_multiple
   - ev_revenue_multiple
+  - premium_paid_percent   # Control premium vs unaffected share price for public targets
+  - synergy_adjusted       # Boolean or note if EV/EBITDA is pre- or post-synergies
   - geography
   - data_source
   - confidence_level    # HIGH / MED / LOW based on public disclosure quality

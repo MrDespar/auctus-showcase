@@ -12,7 +12,8 @@ A company qualifies as a peer if it meets ALL of the following:
 3. Listed on a recognized European or North American exchange
 4. Primarily a services business (not a conglomerate where target sector <40% of revenue)
 5. LTM EBITDA data is publicly available (from Bloomberg, FactSet, or company reports)
-6. Not currently in bankruptcy, restructuring, or formal M&A process (which distorts multiples)
+6. Forward (NTM/CY1) broker estimates are available for Revenue and EBITDA
+7. Not currently in bankruptcy, restructuring, or formal M&A process (which distorts multiples)
 
 ## Exclusion Criteria
 

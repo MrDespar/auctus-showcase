@@ -80,8 +80,7 @@ Normalized EBITDA margin signals business quality.
 | ≥20%                 | 100   |
 | 15%–20%              | 85    |
 | 10%–15%              | 65    |
-| 8%–10%               | 40    |
-| <8% (hard filter edge)| 10   |
+| <10%                | 10    |
 
 ### Dimension 6: DACH Geographic Concentration (weight: 0.10)
 Focus on core geography improves operational integration ease.

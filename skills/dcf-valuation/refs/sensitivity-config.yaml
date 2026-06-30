@@ -1,34 +1,173 @@
 # DCF Sensitivity Grid Configuration
 # Referenced by: skills/dcf-valuation/SKILL.md Step 5
-# Governs the dimensions, step sizes, and formatting of the sensitivity output.
+# Version: 2.0
+# Governs the dimensions, step sizes, output metrics, and formatting of all
+# three sensitivity grids. Three grids are mandatory: EV, implied multiple, MOIC.
 
-grid:
-  # WACC axis: base ± wacc_bps_range, at wacc_steps evenly spaced points
-  wacc_bps_range: 200     # ±200 bps (e.g. base 10% → range 8%–12%)
-  wacc_steps: 5           # 5 points: base-200, base-100, base, base+100, base+200
+# ── Grid 1: WACC × Terminal Growth Rate → Enterprise Value ────────────────────
+grid_1:
+  name: "EV Sensitivity"
+  label: "WACC vs. Terminal Growth Rate — Enterprise Value (€m)"
+  output_metric: enterprise_value_eur_m
 
-  # Terminal Growth Rate axis: base ± tgr_bps_range, at tgr_steps evenly spaced points
-  tgr_bps_range: 100      # ±100 bps (e.g. base 2.5% → range 1.5%–3.5%)
-  tgr_steps: 5            # 5 points: base-100, base-50, base, base+50, base+100
+  wacc_axis:
+    bps_range: 200        # ±200 bps around base WACC
+    steps: 5              # 5 points: base−200, base−100, base, base+100, base+200
+    # Result: if base WACC = 10.5%, axis = [8.5%, 9.5%, 10.5%, 11.5%, 12.5%]
 
-  # Output metric in cells
-  output_metric: enterprise_value_eur_m   # Options: enterprise_value_eur_m | equity_value_eur_m | ev_ebitda_implied
+  tgr_axis:
+    bps_range: 100        # ±100 bps around base terminal growth
+    steps: 5              # 5 points: base−100, base−50, base, base+50, base+100
+    # Result: if base TGR = 2.5%, axis = [1.5%, 2.0%, 2.5%, 3.0%, 3.5%]
 
-# Formatting rules for the markdown sensitivity table
+  total_cells: 25         # 5×5 — all must be formula strings, no values
+  center_cell: [2, 2]     # 0-indexed: row 2, col 2 = base case
+  center_fill: "#BDD7EE"  # Medium blue, bold font
+  center_sanity: "Center cell EV must equal DCF!enterprise_value ± €0.1m"
+
+# ── Grid 2: WACC × Terminal Growth Rate → Implied EV/EBITDA Exit Multiple ─────
+grid_2:
+  name: "Implied Multiple Sensitivity"
+  label: "WACC vs. Terminal Growth Rate — Implied EV/EBITDA Exit Multiple"
+  output_metric: implied_ev_ebitda_x
+  # Each cell = Grid1 EV cell / Projections Year5 EBITDA (fixed reference)
+  # This enables instant comparison to trading comps and precedent transactions.
+  # A cell showing 14x when current comps trade at 8x flags a model error immediately.
+
+  wacc_axis:              # Identical to Grid 1 axes — same WACC range
+    bps_range: 200
+    steps: 5
+
+  tgr_axis:               # Identical to Grid 1 axes
+    bps_range: 100
+    steps: 5
+
+  total_cells: 25
+  center_cell: [2, 2]
+  center_fill: "#BDD7EE"
+  center_sanity: "Center cell implied multiple should be near current trading comps range"
+
+# ── Grid 3: Entry EV/EBITDA × Exit EV/EBITDA → MOIC ─────────────────────────
+grid_3:
+  name: "Returns Sensitivity"
+  label: "Entry EV/EBITDA × Exit EV/EBITDA — MOIC"
+  output_metric: moic_x
+  # This is the primary IC sensitivity: how does MOIC change with entry price and exit price?
+  # Each cell recalculates the full equity bridge:
+  #   Entry EV  = entry_multiple × LTM_EBITDA (last historical)
+  #   Entry eq  = Entry EV − Inputs!entry_net_debt
+  #   Exit EV   = exit_multiple  × Projections!Year5_EBITDA
+  #   Exit eq   = Exit EV − Inputs!exit_net_debt
+  #   MOIC      = Exit_eq / Entry_eq
+
+  entry_multiple_axis:
+    midpoint: "=Inputs!entry_ev_ebitda_base"  # Base case entry multiple from Inputs sheet
+    step: 1.0                                  # ±1.0x steps
+    steps: 5                                   # 5 points: base−2x, base−1x, base, base+1x, base+2x
+
+  exit_multiple_axis:
+    midpoint: "=Inputs!exit_ev_ebitda_base"   # Base case exit multiple from Inputs sheet
+    step: 1.0
+    steps: 5
+
+  total_cells: 25
+  center_cell: [2, 2]
+  center_fill: "#BDD7EE"
+  center_sanity: "Center cell MOIC must equal DCF!moic ± 0.01x"
+
+  # MOIC threshold shading (optional conditional formatting)
+  moic_thresholds:
+    strong_green: 3.0     # MOIC ≥ 3.0x → dark green fill
+    green: 2.5            # MOIC 2.5–3.0x → green
+    amber: 2.0            # MOIC 2.0–2.5x → amber
+    red: 2.0              # MOIC < 2.0x → red (below AUCTUS return hurdle)
+
+# ── Grid 4: Entry Leverage (Net Debt/EBITDA) × Exit EV/EBITDA → IRR ──────────
+grid_4:
+  name: "Leverage vs. Returns Sensitivity"
+  label: "Entry Net Debt/EBITDA × Exit EV/EBITDA — IRR"
+  output_metric: irr_pct
+  # Separates financial engineering (leverage effect) from value creation (exit multiple).
+  # Entry EV is held fixed; entry debt changes with leverage, compressing or expanding entry equity.
+  # IC uses this grid to stress-test leverage assumptions independently of the deal price.
+
+  entry_leverage_axis:
+    midpoint: "=Inputs!entry_net_debt_cell/Historicals!ltm_ebitda_norm_cell"  # base leverage at close
+    step: 1.0                  # ±1.0x Net Debt/EBITDA steps
+    steps: 5                   # 5 points: base−2x, base−1x, base, base+1x, base+2x
+
+  exit_multiple_axis:
+    midpoint: "=Inputs!exit_ev_ebitda_base"  # same midpoint as Grid 3 exit axis
+    step: 1.0
+    steps: 5
+
+  irr_formula_notes: |
+    For each cell [leverage_i, exit_j]:
+      entry_debt_ij   = leverage_i × Historicals!ltm_ebitda_norm
+      entry_equity_ij = Inputs!entry_ev − entry_debt_ij
+      exit_ev_ij      = exit_j × Projections!year5_ebitda_norm
+      # Exit debt approximation: entry_debt reduced by cumulative amortisation over hold period.
+      # For a straight-line 10-year amortisation: exit_debt = entry_debt × MAX(0, 1 − hold_yrs/10)
+      exit_debt_ij    = entry_debt_ij * MAX(0, 1 - Inputs!hold_period/10)
+      exit_equity_ij  = exit_ev_ij − exit_debt_ij
+      IRR_ij          = XIRR({−entry_equity_ij, exit_equity_ij}, {Inputs!close_date, Inputs!exit_date})
+
+  total_cells: 25
+  center_cell: [2, 2]
+  center_fill: "#BDD7EE"
+  center_sanity: "Center cell IRR must equal DCF!irr_base ± 0.5%"
+
+  # IRR threshold shading
+  irr_thresholds:
+    strong_green: 0.20    # IRR ≥ 20% → dark green (above AUCTUS target)
+    green: 0.175          # IRR 17.5–20% → green
+    amber: 0.15           # IRR 15–17.5% → amber
+    red: 0.15             # IRR < 15% → red (below AUCTUS minimum hurdle)
+
+# ── Implementation Rules (apply to all grids) ─────────────────────────────────
+implementation:
+  engine: openpyxl_formula_strings
+  # MANDATORY: all 75 cells per grid (225 total) must be Excel formula strings.
+  # Write using a nested loop in the Python script. Never:
+  #   - Use Python-computed values
+  #   - Use linear approximations
+  #   - Use Excel's Data Table feature (requires manual intervention)
+  #   - Leave cells blank or with placeholder text
+
+  loop_pattern: |
+    for r_idx, axis1_val in enumerate(axis1_values):   # 5 values
+        for c_idx, axis2_val in enumerate(axis2_values):  # 5 values
+            formula = build_formula(axis1_val, axis2_val)  # returns formula string
+            cell = ws.cell(row=start_row+r_idx, col=start_col+c_idx)
+            cell.value = formula
+            if r_idx == 2 and c_idx == 2:
+                cell.fill = PatternFill("solid", fgColor="BDD7EE")
+                cell.font = Font(bold=True)
+
+# ── Formatting ─────────────────────────────────────────────────────────────────
 formatting:
-  cell_precision: 1            # 1 decimal place for EV values (e.g. 42.3)
-  base_case_marker: "**{v}**"  # Bold the base case cell
-  highlight_above_threshold: null  # Optional: mark cells above an EV threshold
-  currency_unit: "€m"
+  grid_1_precision: "€#,##0.0"      # EV in €m, 1 decimal
+  grid_2_precision: "0.0\"x\""      # EV/EBITDA multiple, 1 decimal
+  grid_3_precision: "0.00\"x\""     # MOIC, 2 decimals
+  row_header_fill: "#D9E1F2"        # Light blue
+  col_header_fill: "#D9E1F2"
+  section_header_fill: "#1F4E79"    # Dark blue
+  blank_rows_between_grids: 2
 
-# Sanity checks — script must verify these before writing output
+# ── Validation (all must pass before model is delivered) ─────────────────────
 validation:
-  max_allowed_nan_cells: 0         # Zero NaN cells permitted
-  min_ev_eur_m: 0.0               # EV must be positive in all cells
-  max_tv_pct_of_ev: 0.85          # Warn if any cell has TV >85% of EV
+  max_allowed_nan_cells: 0          # Zero NaN or error cells permitted across all grids
+  min_ev_eur_m_grid1: 0.0           # All EV cells must be positive
+  max_tv_pct_of_ev_grid1: 0.90      # Warn (not fail) if any Grid 1 cell has TV >90% of EV
+  moic_must_be_positive: true       # All Grid 3 cells must be > 0
+  center_cell_tolerance_eur_m: 0.1  # Grid 1 center ≈ DCF!EV within €0.1m
+  center_cell_tolerance_moic: 0.01  # Grid 3 center ≈ DCF!MOIC within 0.01x
 
-# CSV output schema
-csv_schema:
-  index: "wacc"           # Row index is WACC value (as decimal, e.g. 0.10)
-  columns: "tgr"          # Column headers are TGR values (as decimal, e.g. 0.025)
-  values: "enterprise_value_eur_m"
+# ── Output Location ────────────────────────────────────────────────────────────
+output:
+  sheet_name: "Sensitivity"
+  grid_1_start_row: 3
+  grid_2_start_row: 14    # grid_1_start + 5 data rows + 2 header rows + 2 blank
+  grid_3_start_row: 25    # grid_2_start + 5 data rows + 2 header rows + 2 blank
+  grid_4_start_row: 36    # grid_3_start + 5 data rows + 2 header rows + 2 blank
+  start_col: 2            # Column B

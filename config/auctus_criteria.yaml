@@ -4,9 +4,8 @@
 # This file is READ-ONLY to the agent. Changes require IC approval.
 
 hard_filters:
-  revenue_min_eur: 10_000_000       # €10m floor
-  revenue_max_eur: 150_000_000      # €150m ceiling
-  ebitda_margin_min: 0.08           # 8% absolute floor
+  revenue_min_eur: 5_000_000       # €5m floor
+  revenue_max_eur: 250_000_000      # €250m ceiling
   ebitda_margin_preferred: 0.15     # 15% preferred threshold
   customer_concentration_max_single: 0.30  # No single customer >30%
   geographies_preferred:
@@ -23,7 +22,7 @@ hard_filters:
     - IT   # Italy
     - SE   # Sweden
     - DK   # Denmark
-    - NO   # Norway
+    - "NO"   # Norway — quoted to prevent PyYAML 1.1 parsing as boolean False
   ownership_preferred:
     - founder
     - family

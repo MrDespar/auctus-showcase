@@ -15,6 +15,11 @@ dependencies = [
     "pydantic>=2.5",
     "pyyaml>=6.0",
     "python-dotenv>=1.0",
+    # Phase-1: FactSet MCP integration (optional — required only for --source factset-mcp)
+    "anthropic>=0.40",
+    # Phase-3: Pitch deck and IC memo generation
+    "python-pptx>=0.6.23",
+    "python-docx>=1.1",
 ]
 
 [project.optional-dependencies]
@@ -44,6 +49,7 @@ disallow_any_generics = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+norecursedirs = ["archive", "tests/archive"]
 addopts = "-v --tb=short --cov=scripts --cov-report=term-missing"
 minversion = "7.4"
 

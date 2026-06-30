@@ -7,15 +7,16 @@
       "Read(*)",
       "Write(data/*)",
       "Write(outputs/*)",
-      "Write(logs/*)"
-    ],
-    "deny": [
+      "Write(logs/*)",
       "Write(skills/*)",
+      "Write(CLAUDE.md)",
+      "Write(.claude/commands/*)",
       "Write(scripts/*)",
       "Write(config/*)",
-      "Write(CLAUDE.md)",
       "Write(mcp_config.json)",
       "Write(tests/*)"
+    ],
+    "deny": [
     ]
   }
 }

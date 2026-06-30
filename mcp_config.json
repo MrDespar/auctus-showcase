@@ -35,20 +35,36 @@
       "env": {
         "BRAVE_API_KEY": "${BRAVE_API_KEY}"
       }
+    },
+    "factset": {
+      "type": "url",
+      "url": "${FACTSET_MCP_ENDPOINT}",
+      "description": "FactSet MCP server — authorised for PUBLIC market data only: entity financials, trading multiples, precedent transactions, and industry benchmarks. Never transmit confidential deal data through this connector.",
+      "auth": {
+        "type": "bearer",
+        "token": "${FACTSET_MCP_TOKEN}"
+      },
+      "tool_allowlist": [
+        "factset_entity_search",
+        "factset_entity_financials",
+        "factset_trading_multiples",
+        "factset_precedent_transactions",
+        "factset_industry_benchmarks"
+      ]
     }
   },
   "_metadata": {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "project": "AUCTUS Capital Partners AG — Agentic PE Platform",
     "environment_variables_required": [
       "BRAVE_API_KEY",
       "ANTHROPIC_API_KEY"
     ],
     "optional_environment_variables": [
-      "FACTSET_API_KEY",
-      "FACTSET_USERNAME",
-      "FACTSET_MCP_ENDPOINT"
+      "FACTSET_MCP_ENDPOINT",
+      "FACTSET_MCP_TOKEN"
     ],
-    "security_note": "All credentials injected via environment variables. See .env.example. Never hardcode secrets."
+    "security_note": "All credentials injected via environment variables. See .env.example. Never hardcode secrets.",
+    "mcp_data_policy": "The factset connector is authorised for PUBLIC market data retrieval only. Confidential AUCTUS deal inputs (IM files, management projections, client names) must never be passed to the factset MCP endpoint."
   }
 }
